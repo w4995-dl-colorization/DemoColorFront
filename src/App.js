@@ -5,7 +5,7 @@ import Dropzone from 'react-dropzone'
 class App extends Component {
   constructor() {
     super()
-    this.state = { files: [] }
+    this.state = { files: []}
   }
 
   onDrop(files) {
@@ -14,11 +14,22 @@ class App extends Component {
     });
   }
 
+  onUpload(){    
+    alert("upload not implemented!");
+  }
+
   render() {
     let dropzoneRef;
     return (
       <Container text>
+        <br/>
         <Segment>
+          <h2>Demo site for Colorization</h2>
+          <p>Please upload color or grayscale images to see results.</p>
+        </Segment>
+        <Segment>
+          <h2>Step 1</h2>
+          <p>Select images for uploading:</p>
           <div className="dropzone">
             <Dropzone ref={(node) => { dropzoneRef = node; }} onDrop={this.onDrop.bind(this)}>
               <p>Drop images here.</p>
@@ -31,7 +42,8 @@ class App extends Component {
         </Segment>
         <Segment>
           <aside>
-            <h2>Selected files</h2>
+            <h2>Step 2</h2>
+            <p>Verify file list and upload for inference:</p>
             <ul>
               {
                 this.state.files.map(f => <li key={f.name}>{f.name} - {f.size} bytes</li>)
@@ -39,11 +51,14 @@ class App extends Component {
             </ul>
           </aside>
           <br />
-          <Button primary onClick={() => alert("upload") }>
+          <Button primary disabled = {this.state.files.length < 1} onClick={this.onUpload.bind(this)}>
             Upload for Inference
           </Button>
         </Segment>
-
+        <Segment>
+          <h2>Step 3</h2>
+          <p>Colored image returned back will be displayed here:</p>
+        </Segment>
 
       </Container>
     );
